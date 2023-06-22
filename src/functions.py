@@ -1,5 +1,6 @@
-import json
 import os
+
+from dotenv import load_dotenv
 
 from src.Parser_hh import Parser_hh
 
@@ -22,4 +23,3 @@ def get_data_from_hh_employers_and_vacancies():
     for employer in employers_top:
         hh = Parser_hh(employer)
         hh.get_employers_and_vacancies()
-
