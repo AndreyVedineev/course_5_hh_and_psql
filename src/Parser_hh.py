@@ -41,6 +41,7 @@ class Parser_hh:
 
         response = requests.get(self.url_emp, params=params_emp, headers=headers)
         count_data = response.json()['pages']
+
         for i in range(count_data):
             param_cycle_emp = {'text': self.top_employer,
                                'only_with_vacancies': True,
@@ -51,21 +52,22 @@ class Parser_hh:
             f = open(path_emp, mode='a', encoding='utf8')
             f.write(json.dumps(employers, ensure_ascii=False))
             f.close()
-        print(" работадатели записаны в файл employers.json")
-        for item in employers:
-            print(f"Забирою вакансии {item['name']} с сайта HH")
-            if item['open_vacancies'] < limiter_of_the_number_of_vacancies:
-                self.url_vac = item['vacancies_url']
-                response = requests.get(self.url_vac, headers=headers)
-                count_data = response.json()['pages']
-                for i in range(count_data):
-                    param_cycle_vac = {'page': i}
-                    response_cycle = requests.get(self.url_vac, params=param_cycle_vac, headers=headers)
-                    result = response_cycle.json()
-                    vacancies.extend(result['items'])
-                    f = open(path_vac, mode='a', encoding='utf8')
-                    f.write(json.dumps(vacancies, ensure_ascii=False))
-                    f.close()
+            print(" работодатели записаны в файл employers.json")
+
+            for item in employers:
+                print(f"Забирою вакансии {item['name']} с сайта HH")
+                if item['open_vacancies'] < limiter_of_the_number_of_vacancies:
+                    self.url_vac = item['vacancies_url']
+                    response = requests.get(self.url_vac, headers=headers)
+                    count_data = response.json()['pages']
+                    for i in range(count_data):
+                        param_cycle_vac = {'page': i}
+                        response_cycle = requests.get(self.url_vac, params=param_cycle_vac, headers=headers)
+                        result = response_cycle.json()
+                        vacancies.extend(result['items'])
+                        f = open(path_vac, mode='a', encoding='utf8')
+                        f.write(json.dumps(vacancies, ensure_ascii=False))
+                        f.close()
         print(" Вакансии собраны и записаны в файл vacancies.json")
 
     def __str__(self):
