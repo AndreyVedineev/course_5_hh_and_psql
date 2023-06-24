@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 employers.json
 vacancies.json
+database.ini
 .DS_Store
 .evn
 src/.DS_Store
