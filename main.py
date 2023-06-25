@@ -11,17 +11,17 @@ path_json = [path_emp, path_vac]
 
 load_dotenv()  # take environment variables from .env.
 
-# db_config = {
-#     'user': os.getenv('POSTGRES_USER'),
-#     'password': os.getenv('POSTGRES_PASSWORD'),
-#     'host': os.getenv('POSTGRES_HOST'),
-#     'port': os.getenv('POSTGRES_PORT')
-# }
+db_config = {
+    'user': os.getenv('POSTGRES_USER'),
+    'password': os.getenv('POSTGRES_PASSWORD'),
+    'host': os.getenv('POSTGRES_HOST'),
+    'port': os.getenv('POSTGRES_PORT')
+}
 
 
 def main():
     name_db = 'vacancies_hh'
-    get_data_from_hh_employers_and_vacancies()
+    # get_data_from_hh_employers_and_vacancies()
     _create_db(name_db, **db_config)
     db = DBManager(name_db, **db_config)
     data_emp = get_data_from_file(path_emp)
@@ -33,6 +33,11 @@ def main():
     for item_l in data_vac:
         db.save_data_to_table_vacancies(item_l)
     print(" Вакансии собраны и записаны в файл vacancies.json")
+    list_of_vacancies = db.get_all_vacancies()
+    for i in list_of_vacancies:
+        print(f'Компания: {i["title"]} Вакансия: {i["name_vacancy"]} '
+              f'Зарплата от: {i["salary_from"]} {i["currency"]} Ссылка: {i["vacancy_url"]}')
+
 
 
 def _create_db(database_name: str, **params):

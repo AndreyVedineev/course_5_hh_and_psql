@@ -1,6 +1,6 @@
 import requests
 
-limiter_of_the_number_of_vacancies = 450  # до 400
+limiter_of_the_number_of_vacancies = 50  # до 400
 
 
 class Parser_hh:
@@ -21,8 +21,6 @@ class Parser_hh:
     def get_employers_and_vacancies(self):
         """ Создание файла с работодателями
             Создание файла с вакансиями работодателей """
-
-
 
         params_emp = {'text': self.top_employer,
                       'only_with_vacancies': True,
@@ -60,4 +58,3 @@ class Parser_hh:
     def __str__(self):
         return self
 
-# employers_sort = sorted(employers, key=lambda x: x['open_vacancies'], reverse=True)

@@ -9,7 +9,7 @@ path_vac = os.path.join('vacancies.json')
 
 def get_data_from_hh_employers_and_vacancies():
     """ Получает данные о 10 работодателях и их вакансий с сайта hh.ru
-        Название компании - топ сайта hh.ru 2022 года """
+        Название компании"""
 
     if os.path.exists(path_emp):
         os.remove(path_emp)
@@ -20,7 +20,7 @@ def get_data_from_hh_employers_and_vacancies():
     employers_all = []
     vacancies_all = []
     vacancies_valid = []
-    employers_top = ['Сбер', 'Яндекс', 'Альфа-банк', 'VK', 'Газпром-нефть', 'ВТБ', 'Сибур', 'Tele2', 'МТС',
+    employers_top = ['Сбер', 'Яндекс', 'Альфа-банк', 'VK', 'Роснефть', 'ВТБ', 'Сибур', 'Почта России', 'МТС',
                      'Газпром']
 
     for employer in employers_top:
@@ -39,7 +39,8 @@ def get_data_from_hh_employers_and_vacancies():
 
 
 def get_data_from_file(name_file):
-    """"""
+    """Чтение файла и преобразует в json"""
+
     with open(name_file, "r", encoding='UTF-8') as read_file:
         data = json.load(read_file)
         return data
