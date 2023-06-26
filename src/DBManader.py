@@ -94,8 +94,14 @@ class DBManager:
         data_list = [{"name_vacancy": d[0], "salary_from": d[1], "vacancy_url": d[2]} for d in data]
         return data_list
 
-    def get_vacancies_with_keyword(self):
-        """Получает список всех вакансий, в названии которых содержатся переданные в метод слова, например “python”."""
+    def get_vacancies_with_keyword(self, kw):
+        """Получает список всех вакансий, в названии которых содержатся слова, например “python”."""
+        self.cur.execute(f"SELECT name_vacancy, salary_from, vacancy_url "
+                         f"FROM vacancies WHERE name_vacancy "
+                         f"LIKE '%{kw}%'")
+        data = self.cur.fetchall()
+        data_list = [{"name_vacancy": d[0], "salary_from": d[1], "vacancy_url": d[2]} for d in data]
+        return data_list
 
     def __str__(self):
         return self
