@@ -1,3 +1,5 @@
+import os
+
 import requests
 
 limiter_of_the_number_of_vacancies = 50  # до 400
@@ -7,14 +9,15 @@ class Parser_hh:
     """
     Получает данные о работодателях и их вакансий с сайта hh.ru
     """
+    token = os.getenv('token')
 
-    def __init__(self, top_employer: str):
+    def __init__(self, top_employer: str, token):
         self.top_employer = top_employer  # ключевое слово для поиска
         self.page_number = 0
         self.url_emp = 'https://api.hh.ru/employers?'
         self.url_vac = None
         self.min_payment = 0
-        self.token = "APPLNO6F3AB2J9KNKSF33TOPP1EKGDRM9P16C1ED315I1D4E2RAIKI3R9JP1130K"
+        self.token = token
         self.employers = []
         self.vacancies = []
 

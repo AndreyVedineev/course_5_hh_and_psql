@@ -19,9 +19,6 @@ db_config = {
     'port': os.getenv('POSTGRES_PORT')
 }
 
-# token = os.getenv('token')
-# print(token)
-
 
 def main():
     name_db = 'vacancies_hh'
