@@ -27,8 +27,6 @@ class Parser_hh:
                       'page': self.page_number,
                       'per_page': 20}
 
-        # headers = {'User-Agent': user_agent('chrome'), 'Authorization': f'Bearer {access_token}'}
-
         headers = {'User-Agent': 'K_ParserApp/1.0',
                    'Authorization': f'Bearer {self.token}'}
 
@@ -57,4 +55,3 @@ class Parser_hh:
 
     def __str__(self):
         return self
-

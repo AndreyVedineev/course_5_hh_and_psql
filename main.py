@@ -1,9 +1,10 @@
 import os
-import psycopg2
 
+import psycopg2
 from dotenv import load_dotenv
+
 from src.DBManader import DBManager
-from src.functions import get_data_from_hh_employers_and_vacancies, get_data_from_file
+from src.functions import get_data_from_file, get_data_from_hh_employers_and_vacancies
 
 path_emp = os.path.join('employers.json')
 path_vac = os.path.join('vacancies.json')
@@ -18,10 +19,13 @@ db_config = {
     'port': os.getenv('POSTGRES_PORT')
 }
 
+# token = os.getenv('token')
+# print(token)
+
 
 def main():
     name_db = 'vacancies_hh'
-    # get_data_from_hh_employers_and_vacancies()
+    get_data_from_hh_employers_and_vacancies()
     _create_db(name_db, **db_config)
     db = DBManager(name_db, **db_config)
     data_emp = get_data_from_file(path_emp)
@@ -56,8 +60,6 @@ def main():
     vacancies_with_keyword = db.get_vacancies_with_keyword(kw)
     for vwk in vacancies_with_keyword:
         print(f'Вакансия: {vwk["name_vacancy"]}, Заарплата от: {vwk["salary_from"]}, ссылка: {vwk["vacancy_url"]}')
-
-
 
 
 def _create_db(database_name: str, **params):
