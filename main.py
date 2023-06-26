@@ -32,12 +32,24 @@ def main():
     data_vac = get_data_from_file(path_vac)
     for item_l in data_vac:
         db.save_data_to_table_vacancies(item_l)
+
     print(" Вакансии собраны и записаны в файл vacancies.json")
+
+    print("Список вакансий")
     list_of_vacancies = db.get_all_vacancies()
     for i in list_of_vacancies:
         print(f'Компания: {i["title"]} Вакансия: {i["name_vacancy"]} '
               f'Зарплата от: {i["salary_from"]} {i["currency"]} Ссылка: {i["vacancy_url"]}')
 
+    currencies_list = db.get_currencies()
+    for cur in currencies_list:
+        avg_salary = db.get_avg_salary(cur)
+        print(f'Средняя зарплата: Валюта: {cur} - {round(avg_salary, 2)}')
+
+        higher_salary = db.get_vacancies_with_higher_salary(cur, avg_salary)
+        print(f'Cписок всех вакансий, у которых зарплата выше средней по валюте {cur}')
+        for hi in higher_salary:
+            print(f'Вакансия: {hi["name_vacancy"]}, Заарплата от: {hi["salary_from"]}, ссылка: {hi["vacancy_url"]}')
 
 
 def _create_db(database_name: str, **params):

@@ -66,17 +66,33 @@ class DBManager:
         """Получает список всех вакансий с указанием названия компании, названия вакансии изарплаты и ссылки на
         вакансию."""
         self.cur.execute(f'SELECT title, name_vacancy, salary_from, currency, vacancy_url FROM vacancies '
-                         f'JOIN employers USING(employee_id) ORDER BY salary_from')
+                         f'JOIN employers USING(employee_id) ORDER BY name_vacancy')
         data = self.cur.fetchall()
-        data_dict = [{"title": d[0], "name_vacancy": d[1], "salary_from": d[2], "currency": d[3], "vacancy_url": d[4]}
+        data_list = [{"title": d[0], "name_vacancy": d[1], "salary_from": d[2], "currency": d[3], "vacancy_url": d[4]}
                      for d in data]
-        return data_dict
+        return data_list
 
-    def get_avg_salary(self):
+    def get_avg_salary(self, cur):
         """Получает среднюю зарплату по вакансиям."""
+        self.cur.execute('SELECT AVG (salary_from) FROM vacancies WHERE currency=%s', [cur])
+        return self.cur.fetchone()[0]
 
-    def get_vacancies_with_higher_salary(self):
+    def get_currencies(self):
+        """Получает список валют"""
+        self.cur.execute(f'SELECT DISTINCT currency FROM vacancies')
+        data = self.cur.fetchall()
+        data_list = [d[0] for d in data]
+        return data_list
+
+    def get_vacancies_with_higher_salary(self, cur, avg):
         """Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям."""
+        self.cur.execute("""SELECT name_vacancy, salary_from, vacancy_url FROM vacancies 
+                            WHERE currency = %(cur)s 
+                            GROUP BY id 
+                            HAVING salary_from > %(avg)s""", {'cur': cur, 'avg': avg})
+        data = self.cur.fetchall()
+        data_list = [{"name_vacancy": d[0], "salary_from": d[1], "vacancy_url": d[2]} for d in data]
+        return data_list
 
     def get_vacancies_with_keyword(self):
         """Получает список всех вакансий, в названии которых содержатся переданные в метод слова, например “python”."""
