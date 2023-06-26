@@ -10,6 +10,7 @@ path_emp = os.path.join('employers.json')
 path_vac = os.path.join('vacancies.json')
 path_json = [path_emp, path_vac]
 
+
 load_dotenv()  # take environment variables from .env.
 
 db_config = {
@@ -51,7 +52,7 @@ def main():
         print(f'Cписок всех вакансий, у которых зарплата выше средней по валюте {cur}')
         for hi in higher_salary:
             print(f'Вакансия: {hi["name_vacancy"]}, Заарплата от: {hi["salary_from"]}, ссылка: {hi["vacancy_url"]}')
-    print("Введите ключевое слово для поиска по названию вакансий")
+    print("Введите ключевое слово для поиска по названию вакансий - ")
     # kw = input()
     kw = 'Инженер'
     vacancies_with_keyword = db.get_vacancies_with_keyword(kw)
