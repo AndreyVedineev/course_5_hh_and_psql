@@ -2,7 +2,7 @@ import os
 
 import requests
 
-limiter_of_the_number_of_vacancies = 400  # до 400
+limiter_of_the_number_of_vacancies = 250  # до 400
 
 
 class Parser_hh:
@@ -16,7 +16,7 @@ class Parser_hh:
         self.url_emp = 'https://api.hh.ru/employers?'
         self.url_vac = None
         self.min_payment = 0
-        self.token = os.getenv('token')
+        self.token = "APPLNO6F3AB2J9KNKSF33TOPP1EKGDRM9P16C1ED315I1D4E2RAIKI3R9JP1130K"
         self.employers = []
         self.vacancies = []
 

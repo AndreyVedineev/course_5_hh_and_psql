@@ -1,9 +1,6 @@
 # Byte-compiled / optimized / DLL files
-employers.json
-vacancies.json
 database.ini
 .DS_Store
-.evn
 src/.DS_Store
 src/hlam.py
 __pycache__/
@@ -12,12 +9,11 @@ __pycache__/
 
 # C extensions
 *.so
-
 # Distribution / packaging
 .Python
 build/
 develop-eggs/
-dist/
+dist
 downloads/
 eggs/
 .eggs/
@@ -127,7 +123,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
