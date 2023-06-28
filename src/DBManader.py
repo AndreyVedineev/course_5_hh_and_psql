@@ -20,7 +20,8 @@ class DBManager:
         """Создание таблиц для сохранения данных о вакансиях"""
         with self.conn:
             self.cur.execute(f"""CREATE TABLE IF NOT EXISTS {self.table_1} (
-                                employee_id VARCHAR(10) PRIMARY KEY,
+                                id SERIAL  PRIMARY KEY,
+                                employee_id VARCHAR(10)
                                 title VARCHAR(200),
                                 url_api VARCHAR(200),
                                 alternate_url VARCHAR(200),
