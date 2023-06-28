@@ -20,8 +20,9 @@ def get_data_from_hh_employers_and_vacancies():
     employers_all = []
     vacancies_all = []
     vacancies_valid = []
-    employers_top = ['Сбер', 'Яндекс', 'Альфа-банк', 'VK', 'Роснефть', 'ВТБ', 'Сибур', 'Почта России', 'МТС',
-                     'Газпром']
+    employers_top = ['Краснодар', 'Мостовской']
+    # employers_top = ['Сбер', 'Яндекс', 'Альфа-банк', 'VK', 'Роснефть', 'ВТБ', 'Сибур', 'Почта России', 'МТС',
+    #                  'Газпром']
 
     for employer in employers_top:
         hh = Parser_hh(employer)

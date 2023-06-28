@@ -2,7 +2,7 @@ import os
 
 import requests
 
-limiter_of_the_number_of_vacancies = 1  # до 400
+limiter_of_the_number_of_vacancies = 100  # до 400
 
 
 class Parser_hh:

@@ -54,7 +54,7 @@ def main():
             print(f'Вакансия: {hi["name_vacancy"]}, Заарплата от: {hi["salary_from"]}, ссылка: {hi["vacancy_url"]}')
     print("Введите ключевое слово для поиска по названию вакансий - ")
     # kw = input()
-    kw = 'Инженер'
+    kw = 'Флорист'
     vacancies_with_keyword = db.get_vacancies_with_keyword(kw)
     for vwk in vacancies_with_keyword:
         print(f'Вакансия: {vwk["name_vacancy"]}, Зарплата от: {vwk["salary_from"]}, ссылка: {vwk["vacancy_url"]}')
