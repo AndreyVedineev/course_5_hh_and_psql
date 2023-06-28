@@ -16,3 +16,9 @@
 - в метод слова, например “Инженер”. Ключевое слово сохраняется в переменной kw. (Ввод с клавиатуры).
 
 В проекте используется переменные окружения
+POSTGRES_USER
+POSTGRES_PASSWORD
+POSTGRES_HOST
+POSTGRES_PORT
+для парсинга с HH:
+token = "APPLNO6F3AB2J9KNKSF33TOPP1EKGDRM9P16C1ED315I1D4E2RAIKI3R9JP1130K"
