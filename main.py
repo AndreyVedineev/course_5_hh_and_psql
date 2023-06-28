@@ -57,7 +57,7 @@ def main():
     kw = 'Инженер'
     vacancies_with_keyword = db.get_vacancies_with_keyword(kw)
     for vwk in vacancies_with_keyword:
-        print(f'Вакансия: {vwk["name_vacancy"]}, Заарплата от: {vwk["salary_from"]}, ссылка: {vwk["vacancy_url"]}')
+        print(f'Вакансия: {vwk["name_vacancy"]}, Зарплата от: {vwk["salary_from"]}, ссылка: {vwk["vacancy_url"]}')
 
 
 def _create_db(database_name: str, **params):
