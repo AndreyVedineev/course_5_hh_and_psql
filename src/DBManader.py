@@ -1,6 +1,7 @@
 from typing import Any
 
 import psycopg2
+from psycopg2 import Error
 
 
 class DBManager:
@@ -45,33 +46,42 @@ class DBManager:
 
     def save_data_to_table_employers(self, data: dict):
         """Заполняет таблицу employers данными из файла employers.json """
-        self.cur.execute(
-            f'INSERT INTO {self.table_1} (employee_id, title, url_api, alternate_url, vacancies_url)'
-            f'VALUES (%s, %s, %s, %s, %s)', (data['id'], data['name'], data['url'], data['alternate_url'],
-                                             data['vacancies_url'])
-        )
+        try:
+            self.cur.execute(
+                f'INSERT INTO {self.table_1} (employee_id, title, url_api, alternate_url, vacancies_url)'
+                f'VALUES (%s, %s, %s, %s, %s)', (data['id'], data['name'], data['url'], data['alternate_url'],
+                                                 data['vacancies_url'])
+            )
+        except (Exception, Error) as e:
+            print("Ошибка при работе с PostgresSQL", e)
 
     def save_data_to_table_vacancies(self, data: dict):
         """Заполняет таблицу vacancies данными из файла vacancies.json """
-        self.cur.execute(
-            f'INSERT INTO {self.table_2} (vacancy_id, employee_id, name_vacancy, name_area, salary_from,'
-            f'salary_to, currency, published_at, vacancy_url, requirement, responsibility )'
-            f'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
-            (data['id'], data['employer']['id'], data['name'], data['address']['city'], data['salary']['from'],
-             data['salary']['to'],
-             data['salary']['currency'], data['published_at'], data['alternate_url'],
-             data['snippet']['requirement'], data['snippet']['responsibility'])
-        )
+        try:
+            self.cur.execute(
+                f'INSERT INTO {self.table_2} (vacancy_id, employee_id, name_vacancy, name_area, salary_from,'
+                f'salary_to, currency, published_at, vacancy_url, requirement, responsibility )'
+                f'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                (data['id'], data['employer']['id'], data['name'], data['address']['city'], data['salary']['from'],
+                 data['salary']['to'],
+                 data['salary']['currency'], data['published_at'], data['alternate_url'],
+                 data['snippet']['requirement'], data['snippet']['responsibility'])
+            )
+        except (Exception, Error) as e:
+            print("Ошибка при работе с PostgresSQL", e)
 
     def get_all_vacancies(self):
         """Получает список всех вакансий с указанием названия компании, названия вакансии изарплаты и ссылки на
         вакансию."""
-        self.cur.execute(f'SELECT title, name_vacancy, salary_from, currency, vacancy_url FROM vacancies '
-                         f'JOIN employers USING(employee_id) ORDER BY name_vacancy')
-        data = self.cur.fetchall()
-        data_list = [{"title": d[0], "name_vacancy": d[1], "salary_from": d[2], "currency": d[3], "vacancy_url": d[4]}
-                     for d in data]
-        return data_list
+        try:
+            self.cur.execute(f'SELECT title, name_vacancy, salary_from, currency, vacancy_url FROM vacancies '
+                             f'JOIN employers USING(employee_id) ORDER BY name_vacancy')
+            data = self.cur.fetchall()
+            data_list = [{"title": d[0], "name_vacancy": d[1], "salary_from": d[2], "currency": d[3], "vacancy_url": d[4]}
+                         for d in data]
+            return data_list
+        except (Exception, Error) as e:
+            print("Ошибка при работе с PostgresSQL", e)
 
     def get_avg_salary(self, cur):
         """Получает среднюю зарплату по вакансиям."""
