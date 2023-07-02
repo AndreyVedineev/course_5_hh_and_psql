@@ -72,8 +72,8 @@ def _create_db(database_name: str, **params):
     result = cur.fetchone()
     # Если база данных существует, выполняем операцию DROP DATABASE
     if result:
-        cur.execute("DROP DATABASE %s", [database_name])
-    cur.execute("CREATE DATABASE %s", [database_name])
+        cur.execute(f"DROP DATABASE {database_name}")
+    cur.execute(f"CREATE DATABASE {database_name}")
     conn.close()
 
 
