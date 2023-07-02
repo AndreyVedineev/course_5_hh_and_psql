@@ -2,7 +2,17 @@ import os
 
 import requests
 
-limiter_of_the_number_of_vacancies = 1  # до 400
+limiter_of_the_number_of_vacancies = 2  # до 400
+
+
+class ConnectionErrors(BaseException):
+    """Класс исключения при отсутствии кода скрипта"""
+
+    def __init__(self):
+        self.message = 'Ошибка соединения. Код ответа не равен 200'
+
+    def __str__(self):
+        return self.message
 
 
 class Parser_hh:
@@ -33,6 +43,9 @@ class Parser_hh:
                    'Authorization': f'Bearer {self.token}'}
 
         response = requests.get(self.url_emp, params=params_emp, headers=headers)
+        if response.status_code != 200:
+            raise ConnectionErrors
+
         count_data = response.json()['pages']
 
         for i in range(count_data):
