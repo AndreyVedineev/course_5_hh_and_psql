@@ -7,7 +7,7 @@ path_emp = os.path.join('employers.json')
 path_vac = os.path.join('vacancies.json')
 
 
-def get_data_from_hh_employers_and_vacancies(top):
+def get_data_from_hh_employers_and_vacancies(top, limiter):
     """ Получает данные о 10 работодателях и их вакансий с сайта hh.ru
         Название компании"""
 
@@ -21,8 +21,9 @@ def get_data_from_hh_employers_and_vacancies(top):
     vacancies_all = []
     vacancies_valid = []
 
+
     for employer in top:
-        hh = Parser_hh(employer)
+        hh = Parser_hh(employer, limiter)
         hh.get_employers_and_vacancies()
         employers_all.append(hh.employers)
         vacancies_all.append(hh.vacancies)

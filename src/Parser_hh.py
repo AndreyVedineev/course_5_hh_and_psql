@@ -2,8 +2,6 @@ import os
 
 import requests
 
-limiter_of_the_number_of_vacancies = 2  # до 400
-
 
 class ConnectionErrors(BaseException):
     """Класс исключения при отсутствии кода скрипта"""
@@ -20,7 +18,7 @@ class Parser_hh:
     Получает данные о работодателях и их вакансий с сайта hh.ru
     """
 
-    def __init__(self, top_employer: str):
+    def __init__(self, top_employer: str, depth_of_vacancies):
         self.top_employer = top_employer  # ключевое слово для поиска
         self.page_number = 0
         self.url_emp = 'https://api.hh.ru/employers?'
@@ -29,6 +27,7 @@ class Parser_hh:
         self.token = os.getenv("token")
         self.employers = []
         self.vacancies = []
+        self.depth_of_vacancies = depth_of_vacancies
 
     def get_employers_and_vacancies(self):
         """ Создание файла с работодателями
@@ -58,7 +57,7 @@ class Parser_hh:
 
         for item in self.employers:
             print(f"Забирою вакансии {item['name']} с сайта HH")
-            if item['open_vacancies'] < limiter_of_the_number_of_vacancies:
+            if item['open_vacancies'] < self.depth_of_vacancies:
                 self.url_vac = item['vacancies_url']
                 response = requests.get(self.url_vac, headers=headers)
                 count_data = response.json()['pages']

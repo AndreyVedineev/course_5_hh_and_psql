@@ -11,6 +11,7 @@ path_vac = os.path.join('vacancies.json')
 path_json = [path_emp, path_vac]
 employers_top = ['Сбер', 'Яндекс', 'Альфа-банк', 'VK', 'Роснефть', 'ВТБ', 'Сибур', 'Почта России', 'МТС',
                  'Газпром']
+limiter_of_the_number_of_vacancies = 2
 
 load_dotenv()  # take environment variables from .env.
 
@@ -24,7 +25,7 @@ db_config = {
 
 def main():
     name_db = 'vacancies_hh'
-    get_data_from_hh_employers_and_vacancies(employers_top)
+    get_data_from_hh_employers_and_vacancies(employers_top, limiter_of_the_number_of_vacancies)
     _create_db(name_db, **db_config)
     db = DBManager(name_db, **db_config)
     data_emp = get_data_from_file(path_emp)
